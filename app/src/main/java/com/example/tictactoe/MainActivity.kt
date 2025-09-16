@@ -1,6 +1,7 @@
 package com.example.tictactoe
 
 import android.os.Bundle
+import android.view.RoundedCorner
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
@@ -83,7 +85,7 @@ fun Tictactoe() {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(LightBlue),
+                    .background(LightBlue, ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -198,13 +200,18 @@ fun Tictactoe() {
 
         Button(
             onClick = {
-                for (k in cells.indices)
+                for (k in cells.indices){
                     cells[k] = ""
+                    cnt=0
+                    cn=0
+                }
                 turn = "X"
                 p = 0
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-            shape = RectangleShape,
+            shape = RoundedCornerShape(
+                8.dp
+            ),
             modifier = Modifier
                 .width(250.dp)
                 .height(50.dp)
