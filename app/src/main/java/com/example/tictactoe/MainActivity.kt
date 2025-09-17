@@ -1,5 +1,6 @@
 package com.example.tictactoe
 
+
 import android.os.Bundle
 import android.view.RoundedCorner
 import androidx.activity.ComponentActivity
@@ -32,11 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 import com.example.tictactoe.ui.theme.TicTacToeTheme
 
 class MainActivity : ComponentActivity() {
@@ -72,6 +76,7 @@ fun Tictactoe() {
 
     var cnt by remember { mutableStateOf(0) }
     var cn by remember { mutableStateOf(0) }
+    var pt by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -85,11 +90,13 @@ fun Tictactoe() {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(LightBlue, ),
+                    .background(LightBlue,
+                        shape=RoundedCornerShape(8.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "PLAYER X\n$cntx",
+                    fontFamily =ont_Family ,
                     fontSize = 18.sp,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
@@ -100,13 +107,15 @@ fun Tictactoe() {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(PaleBlue),
+                    .background(PaleBlue,
+                        shape=RoundedCornerShape(8.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "DRAW\n$cntd",
                     fontSize = 18.sp,
                     color = Color.Black,
+                    fontFamily =ont_Family ,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
@@ -115,12 +124,14 @@ fun Tictactoe() {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(MustardYellow),
+                    .background(MustardYellow,
+                        shape=RoundedCornerShape(8.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "PLAYER O\n$cnto",
                     fontSize = 18.sp,
+                    fontFamily =ont_Family ,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -137,7 +148,8 @@ fun Tictactoe() {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .background(TilePurple)
+                            .background(TilePurple,
+                                shape=RoundedCornerShape(8.dp))
                             .clickable {
                                 if (cells[index].isEmpty() && p == 0) {
                                     cells[index] = turn
@@ -155,10 +167,12 @@ fun Tictactoe() {
                                             cntx++
                                             p = 1
                                             cnt=1
+
                                         } else if (cells[index] == "O") {
                                             cnto++
                                             p = 1
                                             cn=1
+
                                         }
                                     } else if (cells.none { it.isEmpty() }) {
                                         cntd++
@@ -170,11 +184,14 @@ fun Tictactoe() {
                     ) {
                         Text(
                             text = cells[index],
+                            fontFamily =ont_Family ,
                             fontSize = 36.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
+                            color =when{
+                                cells[index]=="X"->Color.Cyan
+                                else ->Color.Yellow },
+                                fontWeight = FontWeight.Bold
                         )
-                    }
+                            }
                     if (j < 2) Spacer(modifier = Modifier.width(20.dp))
                 }
             }
@@ -188,7 +205,9 @@ fun Tictactoe() {
                 text=when {
                     cnt == 1 -> "X Wins"
                     cn == 1 -> "O Wins"
-                    else -> "Match Draw"},
+                    p==1 -> "Match Draw"
+                    else-> "Please Give a Move"},
+                fontFamily =ont_Family ,
                 fontSize = 30.sp,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
@@ -210,7 +229,7 @@ fun Tictactoe() {
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.White),
             shape = RoundedCornerShape(
-                8.dp
+                12.dp
             ),
             modifier = Modifier
                 .width(250.dp)
@@ -219,6 +238,7 @@ fun Tictactoe() {
             Text(
                 text = "New Game",
                 fontSize = 20.sp,
+                fontFamily =ont_Family ,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
             )
@@ -232,20 +252,26 @@ fun Tictactoe() {
                 p = 0
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-            shape = RectangleShape,
+            shape = RoundedCornerShape(
+                12.dp
+            ),
             modifier = Modifier
                 .width(200.dp)
                 .height(50.dp)
         ) {
             Text(
                 text = "Reset Score",
+                fontFamily =ont_Family ,
                 fontSize = 20.sp,
                 color = Color.Black,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
     }
 }
+val ont_Family = FontFamily(
+    Font(R.font.fredoka_one_regular)
+)
 
 @Preview
 @Composable
